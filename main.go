@@ -56,7 +56,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "80"
+		port = "8080"
 	}
 	fmt.Println("Server is listening on port", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
