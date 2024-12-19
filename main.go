@@ -81,7 +81,7 @@ func handleTelegramWebhook(w http.ResponseWriter, r *http.Request) {
 	website := update.Message.Text
 	log.Printf("Fetching info for website: %s", website)
 	go func() {
-		responseMessage := fetchWebsiteInfoWithRetry(website)
+		responseMessage := fetchWebsiteInfo(website)
 		sendMessage(update.Message.Chat.ID, responseMessage)
 	}()
 }
@@ -105,10 +105,7 @@ func fetchWebsiteInfoWithRetry(website string) string {
 func fetchWebsiteInfo(website string) string {
 	url := "https://www.similarweb.com/website/" + website + "/competitors/"
 	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Printf("Could not create request: %v", err)
-		return "An error occurred while processing your request."
-	}
+	
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0")
 	req.Header.Set("Accept-Language", "en-US,en;q=0.9")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8")
