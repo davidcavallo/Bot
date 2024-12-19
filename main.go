@@ -66,11 +66,6 @@ func handleTelegramWebhook(w http.ResponseWriter, r *http.Request) {
 	log.Println("Received a webhook request")
 	var update Update
 
-	if err := json.NewDecoder(r.Body).Decode(&update); err != nil {
-		log.Printf("Could not decode update: %v", err)
-		return
-	}
-
 	log.Printf("Received message: %s", update.Message.Text)
 
 	if update.Message.Text == "" {
