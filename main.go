@@ -116,6 +116,10 @@ func fetchWebsiteInfo(website string) string {
     client := &http.Client{Timeout: 10 * time.Second}
     resp, err := client.Do(req)
     if err != nil {
+        if resp != nil {
+            log.Printf("Could not fetch website info: %v (HTTP %d)", err, resp.StatusCode)
+            return fmt.Sprintf("An error occurred while fetching the website: HTTP %d", resp.StatusCode)
+        }
         log.Printf("Could not fetch website info: %v", err)
         return "An error occurred while fetching the website."
     }
