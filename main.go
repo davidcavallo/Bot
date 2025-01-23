@@ -114,6 +114,9 @@ func fetchWebsiteInfo(website string) string {
     req.Header.Set("Accept-Language", "en-US,en;q=0.9")
 
     client := &http.Client{
+        Transport: &http.Transport{
+        ForceAttemptHTTP2: false, // Disable HTTP/2
+        },
         Timeout: 10 * time.Second,
         CheckRedirect: func(req *http.Request, via []*http.Request) error {
             log.Printf("Redirecting to: %s", req.URL.String())
