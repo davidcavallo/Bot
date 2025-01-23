@@ -121,7 +121,7 @@ func fetchWebsiteInfo(website string) string {
             return fmt.Sprintf("An error occurred while fetching the website: HTTP %d", resp.StatusCode)
         }
         log.Printf("Could not fetch website info: %v", err)
-        return "An error occurred while fetching the website."
+        return "An error occurred while fetching the website: HTTP %d"
     }
     defer resp.Body.Close()
 
