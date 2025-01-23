@@ -158,6 +158,7 @@ func fetchWebsiteInfo(website string) string {
         sb.WriteString(fmt.Sprintf("Description: %s\n", description.FullText()))
     } else {
         log.Printf("Description not found: %v", description.Error)
+	log.Printf("Full response body: %s", string(buf))
         sb.WriteString("Description: Not found\n")
     }
 
