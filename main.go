@@ -113,7 +113,14 @@ func fetchWebsiteInfo(website string) string {
     req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")	
     req.Header.Set("Accept-Language", "en-US,en;q=0.9")
 
-    client := &http.Client{Timeout: 10 * time.Second}
+    client := &http.Client{
+        Timeout: 10 * time.Second,
+        CheckRedirect: func(req *http.Request, via []*http.Request) error {
+            log.Printf("Redirecting to: %s", req.URL.String())
+            return nil // Allow redirection
+        },
+    }
+
     resp, err := client.Do(req)
     if err != nil {
         log.Printf("Could not fetch website info: %v", err)
