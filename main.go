@@ -115,7 +115,8 @@ func fetchWebsiteInfo(website string) string {
 
     client := &http.Client{
         Transport: &http.Transport{
-        ForceAttemptHTTP2: false, // Disable HTTP/2
+        ForceAttemptHTTP2: false,
+	DisableKeepAlives: true, // Disable HTTP/2
         },
         Timeout: 10 * time.Second,
         CheckRedirect: func(req *http.Request, via []*http.Request) error {
