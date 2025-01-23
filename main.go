@@ -1,6 +1,5 @@
 package main
 
-
 import (
 	"encoding/json"
 	"fmt"
@@ -104,7 +103,6 @@ func fetchWebsiteInfoWithRetry(website string) string {
 }
 
 func fetchWebsiteInfo(website string) string {
-func fetchWebsiteInfo(website string) string {
     url := "https://www.similarweb.com/website/" + website + "/competitors/"
     req, err := http.NewRequest(http.MethodGet, url, nil)
     if err != nil {
@@ -112,17 +110,10 @@ func fetchWebsiteInfo(website string) string {
         return "An error occurred while processing your request."
     }
     req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0")
-    req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+    req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")	
     req.Header.Set("Accept-Language", "en-US,en;q=0.9")
 
-    client := &http.Client{
-        Timeout: 10 * time.Second,
-        CheckRedirect: func(req *http.Request, via []*http.Request) error {
-            log.Printf("Redirecting to: %s", req.URL.String())
-            return nil // Allow redirection
-        },
-    }
-
+    client := &http.Client{Timeout: 10 * time.Second}
     resp, err := client.Do(req)
     if err != nil {
         log.Printf("Could not fetch website info: %v", err)
@@ -143,7 +134,6 @@ func fetchWebsiteInfo(website string) string {
         log.Printf("Could not read response body: %v", err)
         return "Could not process the response from the website."
     }
-
 
     doc := soup.HTMLParse(string(buf))
 
