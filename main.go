@@ -121,7 +121,22 @@ func fetchWebsiteInfo(website string) string {
         return "An error occurred while fetching the website."
     }
     defer resp.Body.Close()
+	
+// Automatically decompress if the response is compressed
+    var reader io.Reader = resp.Body
+    if resp.Header.Get("Content-Encoding") == "gzip" {
+        reader, err = gzip.NewReader(resp.Body)
+        if err != nil {
+            log.Printf("Error creating gzip reader: %v", err)
+            return "Error decompressing the response."
+        }
+    } else if resp.Header.Get("Content-Encoding") == "deflate" {
+        reader = flate.NewReader(resp.Body)
+    }
 
+    buf, err := io.ReadAll(reader) 
+	// Read from the decompressed reader
+	
     if resp.StatusCode != http.StatusOK {
         log.Printf("Unexpected status code: %d", resp.StatusCode)
         if resp.StatusCode == http.StatusForbidden {
