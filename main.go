@@ -112,7 +112,8 @@ func fetchWebsiteInfo(website string) string {
     req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0")
     req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")	
     req.Header.Set("Accept-Language", "en-US,en;q=0.5")
-    req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+    req.Header.Set("Accept-Encoding", "identity")
+    req.Header.Set("Cookie", "bm_s=YAAQrbsuF0IqWpCUAQAAA7c9lAKVNQ4KrNqOAfwpMaAVsRdDof3QXHJFei5G4Vw9t5KCCcrHSf6gc8WmYyBejhQux/Ehjcqt56JVompMmqw8s13sD6Cil5OEdnVlS6cQxTsUV7i+8SRFUnSWuuvrdtbd4mRdbuJQquFhR1CdGWupT7+P883lhUx28c/fsUGj3IzX3ly2XGdHkrR0vlB22Ho3ZCsLRVp13fTCDrJrrmqDjpJ4c5QhuveId1Chc740QjDUhhQeN7JYp//Aj2Vz5pG25DVU9scZapzbPcwSVHYwj1ktyGrrRi/sYiFQLgypNe0VB1xeXMezD0/V9Unr/G9UXyOZsim73wNo+EaEKcEq8+1SovTUs0qOrnA2P2H0TXGZZBUB6C+I2VqgWYLq4YK/lIY+ijo4IyCL7cCgGpWEdGepIK7HwJIW8DBKNPPZso93hDgUBlkhxiyXl+elEoirJ5qnPRaGm7eZlDhGEFU=")
 
     client := &http.Client{Timeout: 10 * time.Second}
     resp, err := client.Do(req)
@@ -122,19 +123,6 @@ func fetchWebsiteInfo(website string) string {
     }
     defer resp.Body.Close()
 	
-// Automatically decompress if the response is compressed
-    var reader io.Reader = resp.Body
-    if resp.Header.Get("Content-Encoding") == "gzip" {
-        reader, err = gzip.NewReader(resp.Body)
-        if err != nil {
-            log.Printf("Error creating gzip reader: %v", err)
-            return "Error decompressing the response."
-        }
-    } else if resp.Header.Get("Content-Encoding") == "deflate" {
-        reader = flate.NewReader(resp.Body)
-    }
-
-    buf, err := io.ReadAll(reader) 
 	// Read from the decompressed reader
 	
     if resp.StatusCode != http.StatusOK {
