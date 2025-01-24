@@ -115,7 +115,7 @@ func fetchWebsiteInfo(website string) string {
     req.Header.Set("Accept-Encoding", "identity")
     req.Header.Set("Cookie", "bm_s=YAAQrbsuF0IqWpCUAQAAA7c9lAKVNQ4KrNqOAfwpMaAVsRdDof3QXHJFei5G4Vw9t5KCCcrHSf6gc8WmYyBejhQux/Ehjcqt56JVompMmqw8s13sD6Cil5OEdnVlS6cQxTsUV7i+8SRFUnSWuuvrdtbd4mRdbuJQquFhR1CdGWupT7+P883lhUx28c/fsUGj3IzX3ly2XGdHkrR0vlB22Ho3ZCsLRVp13fTCDrJrrmqDjpJ4c5QhuveId1Chc740QjDUhhQeN7JYp//Aj2Vz5pG25DVU9scZapzbPcwSVHYwj1ktyGrrRi/sYiFQLgypNe0VB1xeXMezD0/V9Unr/G9UXyOZsim73wNo+EaEKcEq8+1SovTUs0qOrnA2P2H0TXGZZBUB6C+I2VqgWYLq4YK/lIY+ijo4IyCL7cCgGpWEdGepIK7HwJIW8DBKNPPZso93hDgUBlkhxiyXl+elEoirJ5qnPRaGm7eZlDhGEFU=")
 
-    client := &http.Client{Timeout: 10 * time.Second}
+    client := &http.Client{Timeout: 20 * time.Second}
     resp, err := client.Do(req)
     if err != nil {
         log.Printf("Could not fetch website info: %v", err)
