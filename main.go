@@ -17,7 +17,6 @@ import (
 var telegramBotToken = os.Getenv("TRAF_FIC1")
 var telegramAPIURL = "https://api.telegram.org/bot" + telegramBotToken
 
-
 type Update struct {
 	UpdateID int `json:"update_id"`
 	Message  struct {
